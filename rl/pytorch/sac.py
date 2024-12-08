@@ -4,6 +4,7 @@ import torch
 from torch.optim import Adam
 from torch.nn.functional import relu
 
+torch.autograd.set_detect_anomaly(True)
 
 def weights_init_(m):
     if isinstance(m, torch.nn.Linear):
@@ -215,6 +216,7 @@ class SAC:
     def do_training(self, num_steps_per_epoch):
         state = numpy_to_torch(self.env.reset())
         for i in range(num_steps_per_epoch):
+            print("step: ", i)
             action = self.policy_function.get_action(state,
                                                      deterministic=False)
             action = torch_to_numpy(action).reshape(
@@ -286,7 +288,7 @@ class SAC:
         episode_return = 0
         i = 1
         while True:
-            print("circle: ", i)
+            print("round: ", i+1)
             action = self.policy_function.get_action(state, deterministic=True)
             action = torch_to_numpy(action).reshape(env.action_space.shape)
             next_state, reward, done, info = env.step(action)
@@ -343,12 +345,15 @@ class SAC:
         q1_pred_new_action = self.q1_function(state, new_action)
         q2_pred_new_action = self.q2_function(state, new_action)
         q_pred_new_action = torch.min(q1_pred_new_action, q2_pred_new_action)
-        value_target = q_pred_new_action - alpha * log_pi
+        q_pred_new_action_copy = q_pred_new_action.clone().detach()
+        value_target = q_pred_new_action_copy - alpha * log_pi
         value_function_loss = self.loss_criterion(value_pred,
                                                   value_target.detach())
 
         # Policy loss
-        policy_function_loss = (alpha * log_pi - q_pred_new_action.detach()).mean()
+        #drugi = q_pred_new_action.clone()
+        policy_function_loss = (alpha * log_pi - q_pred_new_action_copy).mean()
+        #policy_function_loss = (-value_target.detach()).mean()
 
         # Perhaps add regularization loss
         # mean_reg_loss = 0.001 * policy_mean.pow(2).mean()
