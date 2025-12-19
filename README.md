@@ -1,7 +1,10 @@
 # gym-longicontrol
-This repository is a fork of the gym_longicontrol repository (https://github.com/dynamik1703/gym_longicontrol). That repository contains the simulation environment of longitudinal car control with given speed restrictions and the codes that train the model with the help of reinforcement learning and do the evaluation. This fork contains upadated codes and files so that can work properly on Google Colaboratory at the moment. Updates concerns the main part of the repository in which we train model and visualize the results on example by mp4 video. File with car model data were added to the repository and new pickle file is created. Training and visualization process is controled by main.ipynb.
 
-In order for the codes to work correctly in the present time on Google Colab, several modifications have been made. A main.ipynb file has been added, which should be run on Google Colab after the entire repository is uploaded to Drive. This Python notebook serves as a guide with pre-written commands for model training and visualization, ensuring that the entire process works with the new modifications.
+This repository is a fork of the gym_longicontrol repository (https://github.com/dynamik1703/gym_longicontrol). The original repository contains a simulation environment for longitudinal car control with specified speed restrictions, along with code for training reinforcement learning models and evaluating their performance.
+
+This fork includes updated code and files to ensure compatibility with Google Colaboratory. The updates focus on the main part of the repository: the training process and visualization, which now allow saving example results as mp4 videos. Additionally, the repository has been extended with a file containing car model data and a new pickle file.
+
+To facilitate smooth operation on Google Colab, several modifications have been implemented. A new Jupyter notebook, **main.ipynb**, has been added. This notebook acts as a guide with pre-written commands to run model training and visualization, ensuring that the workflow operates correctly with the updated code and files. The notebook should be executed on Google Colab after uploading the entire repository to Google Drive.
 
 If you use this repository for academic purposes, please cite the original authors as follows:
 
